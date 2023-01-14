@@ -12,11 +12,10 @@ jobs:
       - name: "dump github context"
         run: echo '${{ toJSON(github.event) }}' | jq
         shell : bash
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v2
+      - uses: actions-ecosystem/action-create-comment@v1
+        if: ${{ startsWith(github.event.comment.body, '/hello') }}
         with:
-          issue-number: ${{ github.event.issue.number }}
+          github_token: ${{ secrets.github_token }}
           body: |
-            This is a multi-line test comment
-          reactions: '+1'
+            Hello, @${{ github.actor }}!
     
