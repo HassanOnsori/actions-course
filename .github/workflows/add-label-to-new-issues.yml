@@ -20,8 +20,12 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issue = await github.issues.get(context.issue);
-            return { isNew: issue.data.created_at === issue.data.updated_at }
+              console.log(context.issue);
+              console.log(github);
+              const issue = await github.issues.get(context.issue);
+              return { isNew: issue.data.created_at === issue.data.updated_at }
+          env:
+            GITHUB_DEBUG: true
       # In the second step, the actions/github-script action is used again to add the label to the new issue. 
       # The script uses the context.repo and context.issue objects to identify the repository and issue, 
       # and adds the label 'new issue' to the issue.
