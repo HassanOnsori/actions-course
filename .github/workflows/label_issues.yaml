@@ -6,17 +6,34 @@ on:
       - reopened
       - opened
 jobs:
-  label_issues:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-    steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ["triage"]
-            })
+  job1:
+      runs-on: ubuntu-latest
+      permissions:
+        issues: write
+      # The actions/github-script is used to add the label to the new issue. 
+      # The script uses the context.repo and context.issue objects to identify the repository and issue, 
+      # and adds the label 'new issue' to the issue.
+      steps:
+        - uses: actions/github-script@v6
+          with:
+            script: |
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ["triage"]
+              })
+  job2:
+      runs-on: ubuntu-latest
+      needs: job1
+      steps:
+        - uses: actions/github-script@v6
+          with:
+            script: |
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '👋 Thanks for reporting!'
+              })
+    
