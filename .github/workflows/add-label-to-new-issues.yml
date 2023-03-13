@@ -19,6 +19,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const context = JSON.parse(args.context);
             const issue = await github.issues.get(context.issue);
             return { isNew: issue.data.created_at === issue.data.updated_at }
             
