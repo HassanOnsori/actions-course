@@ -16,7 +16,7 @@ jobs:
        # and checks if the created_at and updated_at properties are the same, which indicates that the issue is new.
       - name: Check if issue is new
         id: check_if_new
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -26,7 +26,7 @@ jobs:
       # The script uses the context.repo and context.issue objects to identify the repository and issue, 
       # and adds the label 'new issue' to the issue.
       - name: Add label to new issue
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
