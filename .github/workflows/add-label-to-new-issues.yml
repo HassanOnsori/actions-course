@@ -3,7 +3,6 @@ name: Add Label to New Issues
 on:
   issues:
     types: [opened]
-runs-on: ubuntu-latest
 
 # Define the steps that will run in the workflow. 
 # The first step should check if the issue is a new issue, and the second step should add the label to the issue.
